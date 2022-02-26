@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/timurgololobov/socketio/issues"
   },
-  "homepage": "https://github.com/timurgololobov/socketio#readme"
+  "homepage": "https://github.com/timurgololobov/socketio#readme",
+  "dependencies": {
+    "socket.io": "^4.4.1"
+  }
 }

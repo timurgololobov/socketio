@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Socket</title>
+    <script src="https://cdn.socket.io/4.2.0/socket.io.min.js" integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- <input id="input" type="text" autofocus>
+<button id="button">Send</button>
+<div id="messages"></div> -->
+<div id="counterUser">Подключено: 0</div>
+<div id="container">
+<div id = "error-container"></div>
+<input id = "name" type = "text" name = "name" value = "" 
+    placeholder = "Enter your name!">
+<button type = "button" name = "button" onclick = "setUsername()">
+    Let me chat!
+</button>
+</div>
+<script>
+    const socket = io('localhost:5555');
+     const setUsername = () => {
+         socket.emit('setUsername', document.getElementById('name').value);
+      };
+    const sendMessage = () => {
+        let msg = document.getElementById('message').value;
+        if(msg) {
+        socket.emit('msg', {message: msg, user: user});
+        }
+    }
+    let user;
+    socket.on('broadcast', (data) => {
+        document.getElementById('counterUser').innerHTML = '<div> Подключено: 0' + data.description + '</div>'
+      });
+    socket.on('userExists', (data) => {
+        document.getElementById('error-container').innerHTML = data;
+    });
+
+    socket.on('userSet', (data) => {
+        user = data.username;
+        document.getElementById('container').innerHTML = '<input type = "text" id = "message">\
+        <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
+        <div id = "message-container"></div>';
+    });
+
+    socket.on('newmsg', (data) => {
+        if(user) {
+        document.getElementById('message-container').innerHTML += '<div><b>' + 
+            data.user + '</b>: ' + data.message + '</div>'
+        }
+    })
+</script>
+</body>
+</html>
